@@ -71,17 +71,16 @@ Feel free to try solving this problem, and let me know if you need any more help
 using namespace std;
 
 int main(){
-    int num,factorial=0;
-    cout<<"Enter a number:"
+    int num,factorial=1;
+    cout<<"Enter a number:";
     cin>>num;
 
     if(num==0){
         cout<<"1";
     }
-    for(int i=0;i<=num;i++){
+    for(int i=1;i<=num;i++){
         factorial=factorial*i;
-        i--;
     }
-    cout<<factorial<<endl;
+    cout<<"Factorial value of the given number: "<<factorial<<endl;
     return 0;
 }
