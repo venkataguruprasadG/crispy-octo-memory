@@ -81,117 +81,101 @@ Error Handling: Handle cases like invalid task indices or full array.
 
 #include<iostream>
 #include<string>
+#include<limits>
 using namespace std;
 
-const int max_tasks=100;
+const int max_tasks = 100;
 
-struct Task{
+struct Task {
     string description;
     bool completed;
 };
 
-void addTask(Task tasks[],int &count)
-{
-    if(count<max_tasks)
-    {
-        cout<<"Enter Task Description: ";
-        getline(cin,tasks[count].description);
+void addTask(Task tasks[], int &count) {
+    if (count < max_tasks) {
+        cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear input buffer
+        cout << "Enter Task Description: ";
+        getline(cin, tasks[count].description);
 
-        tasks[count].completed=false;
+        tasks[count].completed = false;
         count++;
-        cout<<"Task added Successfully."<<endl;
-    }else{
-        cout<<"Maximum tasks reached ";
+        cout << "Task added Successfully." << endl;
+    } else {
+        cout << "Maximum tasks reached." << endl;
     }
 }
 
-void displayTask(Task tasks[],int count)
-{
-    if(count==0)
-    {
-        cout<<"No tasks are there to display: "<<endl;
+void displayTasks(Task tasks[], int count) {
+    if (count == 0) {
+        cout << "No tasks are there to display." << endl;
         return;
     }
 
-    for(int i=0;i<count;i++)
-    {
-        cout<<i+1<<"."<<tasks[i].description<<endl;
-        cout<<"Status: "<<(tasks[i].completed ? "completed":"pending")<<endl;
-        cout<<"---------------"<<endl;
+    for (int i = 0; i < count; i++) {
+        cout << i + 1 << ". " << tasks[i].description << endl;
+        cout << "Status: " << (tasks[i].completed ? "Completed" : "Pending") << endl;
+        cout << "---------------------" << endl;
     }
 }
 
-void markCompleted(Task tasks[],int count)
-{
+void markCompleted(Task tasks[], int count) {
     int taskIndex;
-    cout<<"Enter index number of your task to mark it as completed: ";
-    cin>>taskIndex;
+    cout << "Enter index number of your task to mark it as completed: ";
+    cin >> taskIndex;
 
-    if(taskIndex > 0 && taskIndex<count)
-    {
-        tasks[taskIndex-1].completed=true;
-        cout<<"Task is marked as completed: "<<endl;
-    }else
-    {
-        cout<<"invalid task index"<<endl;
+    if (taskIndex > 0 && taskIndex <= count) {
+        tasks[taskIndex - 1].completed = true;
+        cout << "Task marked as completed." << endl;
+    } else {
+        cout << "Invalid task index." << endl;
     }
 }
 
-
-void deleteTask(Task tasks[],int &count)
-{
+void deleteTask(Task tasks[], int &count) {
     int taskIndex;
-    cout<<"enter index number which you want to delete: ";
-    cin>>taskIndex;
+    cout << "Enter index number which you want to delete: ";
+    cin >> taskIndex;
 
-    int j;
-
-    if(taskIndex>0 && taskIndex<=count){
-        for(int i=j-1;i<count-1;i++)
-        {
-            tasks[i]=tasks[i+1];
+    if (taskIndex > 0 && taskIndex <= count) {
+        for (int i = taskIndex - 1; i < count - 1; i++) {
+            tasks[i] = tasks[i + 1];
         }
         count--;
-        cout<<"Task is deleted."<<endl;
-    }else{
-        cout<<"Invalid task Index is given."<<endl;
+        cout << "Task deleted." << endl;
+    } else {
+        cout << "Invalid task index." << endl;
     }
 }
 
-int main(){
+int main() {
     Task tasks[max_tasks];
-    int count=0;
+    int count = 0;
     int choice;
 
-    while (true)
-    {
-        /* code */
-    std::cout<<"\n1.Add Task \n 2.Delete Task \n3.Display Tasks\n4.Mark Task as Completed\n5.exit ";
-    cout<<"\nEnter your choice: ";
-    cin>>choice;
+    while (true) {
+        cout << "\n1. Add Task\n2. Delete Task\n3. Display Tasks\n4. Mark Task as Completed\n5. Exit ";
+        cout << "\nEnter your choice: ";
+        cin >> choice;
 
-
-    switch (choice)
-    {
-    case 1:
-        /* code */
-        addTask(tasks,count);
-        break;
-    case 2:
-        deleteTask(tasks,count);
-        break;
-    case 3:
-        displayTask(tasks,count);
-        break;
-    case 4:
-        markCompleted(tasks,count);
-        break;
-    case 5:
-        cout<<"Exiting the program"<<endl;
-        return 0;
-    default:
-        cout<<"Invlid choice.Please enter the correct choice."<<endl;
-    }
+        switch (choice) {
+            case 1:
+                addTask(tasks, count);
+                break;
+            case 2:
+                deleteTask(tasks, count);
+                break;
+            case 3:
+                displayTasks(tasks, count);
+                break;
+            case 4:
+                markCompleted(tasks, count);
+                break;
+            case 5:
+                cout << "Exiting the program." << endl;
+                return 0;
+            default:
+                cout << "Invalid choice. Please enter a correct choice." << endl;
+        }
     }
     return 0;
 }
